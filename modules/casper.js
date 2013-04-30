@@ -2229,6 +2229,11 @@ function createPage(casper) {
         }
     };
     page.onLoadStarted = function onLoadStarted() {
+        // loadInProgress is true only when pages don't match
+        // if it's the same page but with a different hash, it's the same page
+        if (page.url.indexOf(casper.requestUrl.match(/.*#/)) === 0)
+            return;
+
         casper.loadInProgress = true;
         casper.emit('load.started');
     };
